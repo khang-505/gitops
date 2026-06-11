@@ -24,7 +24,7 @@ spec:
           containerPort: 8080
         env:
         - name: ERROR_RATE
-          value: "0" # Bản v1 thiết lập tỉ lệ lỗi bằng 0 (chạy mượt mà)
+          value: "0.5" # Bản v1 thiết lập tỉ lệ lỗi bằng 0 (chạy mượt mà)
         - name: VERSION
           value: "v1"
         readinessProbe: # Bộ kiểm tra sức khỏe, đảm bảo app khởi động xong mới cho nhận traffic
