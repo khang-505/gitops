@@ -1,0 +1,17 @@
+minikube start -p w9
+kubectl config use-context w9
+kubectl get nodes
+# 2) Tạo repo + thư mục app
+mkdir gitops && cd gitops && mkdir k8s
+# -> viết k8s/web.yaml (bên phải)
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: web, namespace: demo }
+spec:
+  replicas: 2
+  selector: { matchLabels: { app: web } }
+  template:
+    metadata: { labels: { app: web } }
+    spec:
+      containers:
+      - { name: web, image: nginx:1.27 }
