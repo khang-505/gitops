@@ -1,0 +1,15 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: api-monitor
+  namespace: demo
+  labels:
+    release: kube-prometheus-stack # ⚠️ QUAN TRỌNG: Nhãn này phải trùng khớp với tên App Prometheus đã cài ở Lab 1 thì nó mới chịu nhận việc!
+spec:
+  selector:
+    matchLabels:
+      app: api # Tìm các Service có gắn nhãn app: api
+  endpoints:
+  - port: http # Chỉ định cổng lấy metric (đã định nghĩa ở file api.yaml)
+    path: /metrics # Đường dẫn xuất metric của thư viện Flask
+    interval: 15s # Chu kỳ quét dữ liệu

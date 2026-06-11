@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: api-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/khang-505/gitops.git 
+    targetRevision: HEAD
+    path: gitops/k8s-api
+  destination:
+    server: https://kubernetes.default.svc # Đường dẫn cụm nội bộ mặc định
+    namespace: demo # Triển khai toàn bộ vào namespace demo
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true # Tự động tạo namespace demo nếu dưới cụm chưa có
