@@ -16,6 +16,7 @@ spec:
       containers:
         - name: web
           image: nginx:latest
+---
 kind: ConfigMap   # v1, wave 0
 metadata: { name: web-config, namespace: demo,
   annotations: { argocd.argoproj.io/sync-wave: "0" } }
