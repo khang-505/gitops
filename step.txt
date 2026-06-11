@@ -15,3 +15,5 @@ spec:
     spec:
       containers:
       - { name: web, image: nginx:1.27 }
+kubectl apply --server-side -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml 
+kubectl -n argocd rollout status  deploy/argocd-server
