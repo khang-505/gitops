@@ -17,3 +17,20 @@ spec:
       - { name: web, image: nginx:1.27 }
 kubectl apply --server-side -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml 
 kubectl -n argocd rollout status  deploy/argocd-server
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+demo: 
+kubectl -n argocd port-forward svc/argocd-server 8080:443
+[System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String((kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath='{.data.password}')))
