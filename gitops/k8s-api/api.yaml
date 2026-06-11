@@ -32,13 +32,16 @@ spec:
             path: /healthz
             port: 8080
   strategy:
-    canary: # Định nghĩa các bước giải phóng traffic cho Lab 4
+    canary:
+      analysis:
+        templates:
+          - templateName: success-rate-analysis # <--- Gắn luật tự động chấm điểm vào đây
       steps:
-        - setWeight: 25
-        - pause: {} # Chờ duyệt thủ công (Sẽ dùng ở Lab 4)
+        - setWeight: 25                         # Thả 25% traffic sang bản mới để thử nghiệm
+        - pause: { duration: 3m }               # Máy tự quan sát và chấm điểm liên tục trong 3 phút (Không để trống nữa)
         - setWeight: 50
-        - pause: { duration: 30s }
-        - setWeight: 100
+        - pause: { duration: 2m }
+        - setWeight: 100                        # Nếu vượt qua hết, tự động lên 100% bản mới
 ---
 apiVersion: v1
 kind: Service
