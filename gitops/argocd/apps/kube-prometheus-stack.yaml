@@ -14,22 +14,24 @@ spec:
         prometheus:
           prometheusSpec:
             serviceMonitorSelectorNilUsesHelmValues: false
+        # --- ĐOẠN SỬA ĐÚNG CHUẨN CỦA HELM CHART ---
         alertmanager:
-          config:
-            global:
-              smtp_smarthost: 'sandbox.smtp.mailtrap.io:2525'
-              smtp_from: 'nguyenkhang.28102004@gmail.com'
-              smtp_auth_username: 'c215a4ed96988e'
-              smtp_auth_password: 'cfe85f25df7d1d'
-            route:
-              group_by: ['alertname']
-              receiver: 'email-receiver'
-              repeat_interval: 5m
-            receivers:
-            - name: 'email-receiver'
-              email_configs:
-              - to: 'nguyenkhang.28102004@gmail.com'
-                send_resolved: true
+          alertmanagerSpec:
+            config: |
+              global:
+                smtp_smarthost: 'sandbox.smtp.mailtrap.io:2525'
+                smtp_from: 'nguyenkhang.28102004@gmail.com'
+                smtp_auth_username: 'c215a4ed96988e'
+                smtp_auth_password: 'cfe85f25df7d1d'
+              route:
+                group_by: ['alertname']
+                receiver: 'email-receiver'
+                repeat_interval: 5m
+              receivers:
+              - name: 'email-receiver'
+                email_configs:
+                - to: 'nguyenkhang.28102004@gmail.com'
+                  send_resolved: true
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
