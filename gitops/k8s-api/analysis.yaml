@@ -7,6 +7,7 @@ spec:
   metrics:
   - name: success-rate
     interval: 30s
+    # 🌟 BẮT BUỘC PHẢI THÊM [0] VÀO ĐÂY:
     successCondition: result[0] >= 0.95   
     failureLimit: 3
     provider:
