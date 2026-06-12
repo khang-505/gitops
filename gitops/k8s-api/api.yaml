@@ -6,7 +6,7 @@ metadata:
   labels:
     app: api
 spec:
-  replicas: 4 # Khởi chạy 4 bản sao hệ thống
+  replicas: 4 
   selector:
     matchLabels:
       app: api
@@ -17,17 +17,19 @@ spec:
     spec:
       containers:
       - name: api
-        image: w9-api:2 # Gọi đúng tên Image bạn đã load vào Minikube ở Lab 2
-        imagePullPolicy: IfNotPresent # Lưu ý: Bắt buộc dùng dòng này để k8s lấy thẳng image dưới máy, không lên Docker Hub tìm
+        image: w9-api:1 
+        imagePullPolicy: IfNotPresent 
         ports:
         - name: http
           containerPort: 8080
         env:
         - name: ERROR_RATE
-          value: "0.5" # Bản v1 thiết lập tỉ lệ lỗi bằng 0 (chạy mượt mà)
+          value: "0" 
         - name: VERSION
           value: "v1"
-        readinessProbe: # Bộ kiểm tra sức khỏe, đảm bảo app khởi động xong mới cho nhận traffic
+        - name: DEPLOY_STAGE
+          value: "on_dinh_v1" # Biến phụ giúp ArgoCD trigger sync
+        readinessProbe: 
           httpGet:
             path: /healthz
             port: 8080
@@ -35,13 +37,13 @@ spec:
     canary:
       analysis:
         templates:
-          - templateName: success-rate-analysis # <--- Gắn luật tự động chấm điểm vào đây
+          - templateName: success-rate-analysis 
       steps:
-        - setWeight: 25                         # Thả 25% traffic sang bản mới để thử nghiệm
-        - pause: { duration: 3m }               # Máy tự quan sát và chấm điểm liên tục trong 3 phút (Không để trống nữa)
+        - setWeight: 25                         
+        - pause: { duration: 3m } # Hệ thống sẽ dừng lại 3 phút ở bước 25% để chạy thử nghiệm              
         - setWeight: 50
         - pause: { duration: 2m }
-        - setWeight: 100                        # Nếu vượt qua hết, tự động lên 100% bản mới
+        - setWeight: 100                        
 ---
 apiVersion: v1
 kind: Service

@@ -6,12 +6,11 @@ metadata:
 spec:
   metrics:
   - name: success-rate
-    interval: 30s                      # Cứ 30 giây Prometheus sẽ quét số liệu 1 lần
-    successCondition: result >= 0.95   # Tỷ lệ request thành công phải đạt từ 95% trở lên
-    failureLimit: 3                    # Nếu tạch liên tiếp quá 3 lần -> TỰ ĐỘNG HỦY (ABORT)
+    interval: 30s
+    successCondition: result[0] >= 0.95   
+    failureLimit: 3
     provider:
       prometheus:
-        # Đường dẫn kết nối đến Service Prometheus đã cài ở Lab 1 (Sử dụng cụm mặc định)
         address: http://kube-prometheus-stack-prometheus.monitoring.svc:9090
         query: |
           sum(rate(flask_http_request_total{namespace="demo", status!~"5.."}[2m])) 
