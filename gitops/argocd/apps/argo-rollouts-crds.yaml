@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argo-rollouts-crds
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: "https://github.com/khang-505/gitops.git"
+    path: gitops/argocd/apps/argo-rollouts-crds
+    targetRevision: HEAD
+    directory:
+      recurse: true
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argo-rollouts
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: false
+    syncOptions:
+      - CreateNamespace=true
