@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: api
-        image: w9-api:1 # Gọi đúng tên Image bạn đã load vào Minikube ở Lab 2
+        image: w9-api:2 # Gọi đúng tên Image bạn đã load vào Minikube ở Lab 2
         imagePullPolicy: IfNotPresent # Lưu ý: Bắt buộc dùng dòng này để k8s lấy thẳng image dưới máy, không lên Docker Hub tìm
         ports:
         - name: http
