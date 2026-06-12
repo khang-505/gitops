@@ -6,7 +6,7 @@ metadata:
 spec:
   metrics:
   - name: success-rate
-    interval: 30s
+    interval: 5m
     # 🌟 BẮT BUỘC PHẢI THÊM [0] VÀO ĐÂY:
     successCondition: result[0] >= 0.95   
     failureLimit: 3
