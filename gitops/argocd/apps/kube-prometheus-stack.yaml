@@ -16,20 +16,22 @@ spec:
             serviceMonitorSelectorNilUsesHelmValues: false
         # --- ĐOẠN SỬA ĐÚNG CHUẨN CỦA HELM CHART ---
         alertmanager:
-          smtp_smarthost: 'smtp.gmail.com:587'
-          smtp_from: 'nguyenkhang.28102004@gmail.com'
-          smtp_auth_username: 'nguyenkhang.28102004@gmail.com'
-          smtp_auth_password: 'inguqsyrjncmoqwt'
-          smtp_require_tls: true
           config:
             global:
-              resolve_timeout: 5m
+              smtp_smarthost: 'smtp.gmail.com:587'
+              smtp_from: 'nguyenkhang.28102004@gmail.com'
+              smtp_auth_username: 'nguyenkhang.28102004@gmail.com'
+              smtp_auth_password: 'APP_PASSWORD'
+              smtp_require_tls: true
+
             route:
-              receiver: 'email-receiver'
-              group_by: ['alertname']
+              receiver: email-receiver
+              group_by:
+              - alertname
               repeat_interval: 5m
+
             receivers:
-            - name: 'email-receiver'
+            - name: email-receiver
               email_configs:
               - to: 'nguyenkhang.28102004@gmail.com'
                 send_resolved: true
