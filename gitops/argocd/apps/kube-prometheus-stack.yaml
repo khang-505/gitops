@@ -16,16 +16,17 @@ spec:
             serviceMonitorSelectorNilUsesHelmValues: false
         # --- ĐOẠN SỬA ĐÚNG CHUẨN CỦA HELM CHART ---
         alertmanager:
-          alertmanagerSpec:
-            config: |
+          alertmanagerFiles:
+            alertmanager.yml: |
               global:
                 smtp_smarthost: 'smtp.gmail.com:587'
                 smtp_from: 'nguyenkhang.28102004@gmail.com'
                 smtp_auth_username: 'nguyenkhang.28102004@gmail.com'
                 smtp_auth_password: 'inguqsyrjncmoqwt'
+                smtp_require_tls: true
               route:
-                group_by: ['alertname']
                 receiver: 'email-receiver'
+                group_by: ['alertname']
                 repeat_interval: 5m
               receivers:
               - name: 'email-receiver'
